@@ -1,50 +1,33 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Category } from '../enum/category.enum';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Date, now } from 'mongoose';
 
-@Entity()
+export type CollectionDocument = Collection & Document;
+@Schema()
 export class Collection {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @Prop({ required: true })
+  image: string;
 
-  @Column({ nullable: false })
-  logoImage: string;
+  @Prop({ required: false })
+  imgFeatured: string;
 
-  @Column({ nullable: true })
-  featuredImage: string;
+  @Prop({ required: false })
+  imgBanner: string;
 
-  @Column({ nullable: true })
-  bannerImage: string;
-
-  @Column({ unique: true, nullable: false })
+  @Prop({ unique: true, required: true })
   name: string;
 
-  @Column({ nullable: true })
-  collectionURL: string;
+  @Prop({ required: false })
+  url: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Prop({ required: false })
   description: string;
 
-  @Column({ default: 'wrapper Binance', nullable: true })
-  blockchain: string;
+  @Prop({ type: Date, required: true, default: now })
+  createdAt: Date;
 
-  @Column({ type: 'enum', enum: Category, nullable: true })
-  category: Category;
-
-  @Column({ type: 'varchar', nullable: true })
-  social: string;
-
-  @Column({ type: 'varchar' })
-  paymentTokens: string;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    nullable: false,
-  })
-  created_at: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    nullable: false,
-  })
-  updated_at: Date;
+  @Prop({ type: Date, required: true, default: now })
+  updatedAt: Date;
 }
+
+export const CollectionSchema = SchemaFactory.createForClass(Collection);

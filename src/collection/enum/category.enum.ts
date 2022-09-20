@@ -1,4 +1,4 @@
 export enum Category {
-    TRENDING = "Trending",
-    Music = "Music",
+    TRENDING = "trending",
+    Music = "music",
 }

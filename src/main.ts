@@ -1,11 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, INestApplication } from '@nestjs/common';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
-
+const configSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
     .setTitle('Collections API')
     .setDescription('The collections API description')
@@ -14,11 +12,24 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+}
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-  }))
+const configValidation = (app: INestApplication) => {
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    })
+  );
+}
 
-  await app.listen(8080);
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, { cors: true });
+
+  configSwagger(app);
+  configValidation(app);
+
+  await app.listen(process.env.PORT || 8080);
 }
 bootstrap();
