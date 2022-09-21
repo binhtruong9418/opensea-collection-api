@@ -30,6 +30,6 @@ async function bootstrap() {
   configSwagger(app);
   configValidation(app);
 
-  await app.listen(Number(process.env.PORT) || 8080);
+  await app.listen(Number(process.env.PORT) || 80);
 }
 bootstrap();
