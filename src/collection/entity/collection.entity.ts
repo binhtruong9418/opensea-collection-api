@@ -3,31 +3,26 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Date, now } from 'mongoose';
 
 export type CollectionDocument = Collection & Document;
-@Schema()
+@Schema({ timestamps: true })
 export class Collection {
-  @Prop({ required: true })
+  @Prop({ required: true, default: 'https://image.com' })
   image: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: 'https://image.com' })
   imgFeatured: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: 'https://image.com' })
   imgBanner: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ unique: true, required: true, default: 'collection 1' })
   name: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: 'https://opensea.io/collection/treasures-of-the-sea' })
   url: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: "This is the description of collection 1" })
   description: string;
 
-  @Prop({ type: Date, required: true, default: now })
-  createdAt: Date;
-
-  @Prop({ type: Date, required: true, default: now })
-  updatedAt: Date;
 }
 
 export const CollectionSchema = SchemaFactory.createForClass(Collection);

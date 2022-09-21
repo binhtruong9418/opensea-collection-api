@@ -12,8 +12,8 @@ export class CollectionController {
 
   @ApiOperation({ summary: 'Create a collection' })
   @Post('create')
-  async createItem(@Body() nftInformation: NftInformationDto): Promise<any> {
-    return this.collectionService.createOne(nftInformation);
+  async createItem(@Body() collection: NftInformationDto): Promise<CollectionDocument> {
+    return this.collectionService.createOne(collection);
   }
 
   @ApiOperation({ summary: 'Update a collection by name' })

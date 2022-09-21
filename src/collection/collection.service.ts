@@ -1,24 +1,20 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
 import { NftInformationDto } from './dto/nft-information.dto';
-import { InjectModel } from '@nestjs/mongoose/dist';
-import { Model } from 'mongoose';
-import { Collection, CollectionDocument } from './entity/collection.entity';
 import { CollectionRepository } from './collection.repository';
+import { Collection, CollectionDocument } from './entity/collection.entity';
 
 @Injectable()
 export class CollectionService {
   constructor(
     private readonly collectionRepository: CollectionRepository,
-    private readonly httpService: HttpService,
   ) {}
 
-  async createOne(dto: NftInformationDto) {
-    const itemExist = await this.collectionRepository.findOneByName(dto.name);
+  async createOne(collection: NftInformationDto): Promise<CollectionDocument> {
+    const itemExist = await this.collectionRepository.findOneByName(collection.name);
     if (itemExist) {
       throw new BadRequestException('Item already exists');
     }
-    return await this.collectionRepository.create(dto);
+    return await this.collectionRepository.create(collection);
   }
 
   async updateOne(
@@ -29,7 +25,7 @@ export class CollectionService {
     return await this.collectionRepository.update(item._id, colletion);
   }
 
-  async getOne(name: string) {
+  async getOne(name: string): Promise<CollectionDocument> {
     let toLowerCaseName = name.toLowerCase();
     const item = await this.collectionRepository
       .findOneByName(toLowerCaseName)
@@ -46,6 +42,9 @@ export class CollectionService {
 
   async deleteOne(name: string) {
     const item = await this.getOne(name);
+    if(!item) {
+      throw new NotFoundException('Item does not exists');
+    }
     return await this.collectionRepository.remove(item);
   }
 }

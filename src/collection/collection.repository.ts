@@ -11,12 +11,12 @@ export class CollectionRepository {
         private readonly userAppModal: Model<CollectionDocument>,
     ) {}
 
-    async create(dto: NftInformationDto): Promise<CollectionDocument> {
-        return this.userAppModal.create(dto);
+    async create(collection: NftInformationDto): Promise<CollectionDocument> {
+        return this.userAppModal.create(collection);
     }
 
     async update(id: any, collection: NftInformationDto): Promise<CollectionDocument> {
-        return this.userAppModal.findByIdAndUpdate(id, collection);
+        return await this.userAppModal.findByIdAndUpdate(id, collection);
     }
 
     async findOneByName (name: string): Promise<CollectionDocument> {
