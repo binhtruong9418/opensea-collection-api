@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { CollectionController } from './collection.controller';
 import { CollectionService } from './collection.service';
 import { Collection, CollectionSchema } from './entity/collection.entity';
