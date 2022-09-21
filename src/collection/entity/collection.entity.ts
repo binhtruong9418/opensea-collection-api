@@ -17,12 +17,14 @@ export class Collection {
   @Prop({ unique: true, required: true, default: 'collection 1' })
   name: string;
 
-  @Prop({ required: false, default: 'https://opensea.io/collection/treasures-of-the-sea' })
+  @Prop({
+    required: false,
+    default: 'https://opensea.io/collection/treasures-of-the-sea',
+  })
   url: string;
 
-  @Prop({ required: false, default: "This is the description of collection 1" })
+  @Prop({ required: false, default: 'This is the description of collection 1' })
   description: string;
-
 }
 
 export const CollectionSchema = SchemaFactory.createForClass(Collection);

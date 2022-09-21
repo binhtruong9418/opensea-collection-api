@@ -14,7 +14,7 @@ const configSwagger = (app: INestApplication) => {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-}
+};
 
 const configValidation = (app: INestApplication) => {
   app.useGlobalPipes(
@@ -22,19 +22,18 @@ const configValidation = (app: INestApplication) => {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: true,
-    })
+    }),
   );
-}
+};
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  
+
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new ResponseInterceptor());
   configSwagger(app);
   configValidation(app);
 
-  
   await app.listen(Number(process.env.PORT) || 80);
 }
 bootstrap();

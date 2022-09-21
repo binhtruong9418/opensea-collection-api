@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsNotEmpty, IsNumber, IsEnum } from 'class-validator';
 import { Category } from '../enum/category.enum';
 export class CreateCollectionDto {
@@ -48,7 +48,7 @@ export class CreateCollectionDto {
   @ApiProperty({
     description: 'this is the description of collection',
     format: 'string',
-    default: "This is the description of collection 1",
+    default: 'This is the description of collection 1',
   })
   @IsString()
   description: string;

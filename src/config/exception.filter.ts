@@ -30,10 +30,9 @@ export class GlobalExceptionFilter<T> implements ExceptionFilter {
     const message = getErrorMessage<T>(exception);
 
     response.status(statusCode).json({
-        data: {},
-        status: statusCode,
-        message,
-      },
-    );
+      data: {},
+      status: statusCode,
+      message,
+    });
   }
 }

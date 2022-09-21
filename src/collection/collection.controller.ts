@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CollectionService } from './collection.service';
 import { NftInformationDto } from './dto/nft-information.dto';
@@ -11,7 +20,9 @@ export class CollectionController {
 
   @ApiOperation({ summary: 'Create a collection' })
   @Post()
-  async createItem(@Body() collection: NftInformationDto): Promise<CollectionDocument> {
+  async createItem(
+    @Body() collection: NftInformationDto,
+  ): Promise<CollectionDocument> {
     return this.collectionService.createOne(collection);
   }
 
@@ -21,7 +32,7 @@ export class CollectionController {
     const data = await this.collectionService.getAll();
     return data;
   }
-  
+
   @ApiOperation({ summary: 'Get a collection by id' })
   @Get('/:id')
   async getOne(@Param('id') id: string): Promise<CollectionDocument> {

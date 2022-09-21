@@ -6,7 +6,6 @@ import { AppService } from './app.service';
 import { CollectionModule } from './collection/collection.module';
 import { ConfigService } from '@nestjs/config/dist';
 
-
 @Module({
   imports: [
     CollectionModule,
@@ -18,6 +17,5 @@ import { ConfigService } from '@nestjs/config/dist';
   controllers: [AppController],
   providers: [AppService],
 })
-
 export class AppModule {}
 console.log(process.env.DB_URI);

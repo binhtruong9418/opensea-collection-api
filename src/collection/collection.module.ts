@@ -7,14 +7,16 @@ import { MongooseModule } from '@nestjs/mongoose/dist';
 import { CollectionRepository } from './collection.repository';
 
 @Module({
-    controllers: [CollectionController],
-    providers: [CollectionService, CollectionRepository],
-    imports: [
-        MongooseModule.forFeature([{ name: Collection.name, schema: CollectionSchema }]),
-        HttpModule.register({
-            timeout: 5000,
-            maxRedirects: 5,
-        })
-    ]
+  controllers: [CollectionController],
+  providers: [CollectionService, CollectionRepository],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Collection.name, schema: CollectionSchema },
+    ]),
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5,
+    }),
+  ],
 })
 export class CollectionModule {}
