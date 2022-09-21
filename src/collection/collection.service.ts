@@ -18,17 +18,16 @@ export class CollectionService {
   }
 
   async updateOne(
-    name: string,
+    id: string,
     colletion: NftInformationDto,
   ) {
-    const item = await this.getOne(name);
+    const item = await this.getOne(id);
     return await this.collectionRepository.update(item._id, colletion);
   }
 
-  async getOne(name: string): Promise<CollectionDocument> {
-    let toLowerCaseName = name.toLowerCase();
+  async getOne(id: string): Promise<CollectionDocument> {
     const item = await this.collectionRepository
-      .findOneByName(toLowerCaseName)
+      .findOneById(id)
     if (!item) {
       throw new NotFoundException('Item does not exists');
     }
@@ -40,8 +39,8 @@ export class CollectionService {
     return await this.collectionRepository.findAll();
   }
 
-  async deleteOne(name: string) {
-    const item = await this.getOne(name);
+  async deleteOne(id: string) {
+    const item = await this.getOne(id);
     if(!item) {
       throw new NotFoundException('Item does not exists');
     }

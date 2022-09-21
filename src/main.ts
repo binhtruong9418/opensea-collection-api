@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe, INestApplication } from '@nestjs/common';
+import { ResponseInterceptor } from './config/response.interceptor';
+import { GlobalExceptionFilter } from './config/exception.filter';
 
 const configSwagger = (app: INestApplication) => {
   const config = new DocumentBuilder()
@@ -26,7 +28,9 @@ const configValidation = (app: INestApplication) => {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-
+  
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalInterceptors(new ResponseInterceptor());
   configSwagger(app);
   configValidation(app);
 

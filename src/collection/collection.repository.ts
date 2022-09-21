@@ -19,8 +19,8 @@ export class CollectionRepository {
         return await this.userAppModal.findByIdAndUpdate(id, collection);
     }
 
-    async findOneByName (name: string): Promise<CollectionDocument> {
-    return this.userAppModal.findOne({ name });
+    async findOneById (id: string): Promise<CollectionDocument> {
+    return this.userAppModal.findById(id);
     }
     
     async findAll(): Promise<CollectionDocument[]> {
@@ -29,5 +29,9 @@ export class CollectionRepository {
 
     async remove(collection: CollectionDocument): Promise<CollectionDocument> {
         return this.userAppModal.findByIdAndRemove(collection._id);
+    }
+
+    async findOneByName(name: string): Promise<CollectionDocument> {
+        return this.userAppModal.findOne({ name });
     }
 }

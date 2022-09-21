@@ -1,45 +1,45 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CollectionService } from './collection.service';
 import { NftInformationDto } from './dto/nft-information.dto';
 import { CollectionDocument } from './entity/collection.entity';
 
-@ApiTags('Collection')
-@Controller('collection')
+@ApiTags('Collections')
+@Controller('v2/collections')
 export class CollectionController {
   constructor(private readonly collectionService: CollectionService) {}
 
   @ApiOperation({ summary: 'Create a collection' })
-  @Post('create')
+  @Post()
   async createItem(@Body() collection: NftInformationDto): Promise<CollectionDocument> {
     return this.collectionService.createOne(collection);
   }
 
-  @ApiOperation({ summary: 'Update a collection by name' })
-  @Put('/update/:name')
-  async update(
-    @Param('name') name: string,
-    @Body() collection: NftInformationDto,
-  ): Promise<CollectionDocument> {
-    return await this.collectionService.updateOne(name, collection);
-  }
-
-  @ApiOperation({ summary: 'Get a collection by name' })
-  @Put('/getOne/:name')
-  async getOne(@Param('name') name: string): Promise<CollectionDocument> {
-    return this.collectionService.getOne(name);
-  }
-
   @ApiOperation({ summary: 'Get all collections' })
-  @Get('/getAll')
+  @Get()
   async getAll(): Promise<CollectionDocument[]> {
     const data = await this.collectionService.getAll();
     return data;
   }
+  
+  @ApiOperation({ summary: 'Get a collection by id' })
+  @Get('/:id')
+  async getOne(@Param('id') id: string): Promise<CollectionDocument> {
+    return this.collectionService.getOne(id);
+  }
 
-  @ApiOperation({ summary: 'Delete a collection by name' })
-  @Delete('/delete/:name')
-  async deleteOne(@Param('name') name: string): Promise<CollectionDocument> {
-    return this.collectionService.deleteOne(name);
+  @ApiOperation({ summary: 'Update a collection by id' })
+  @Put('/:id')
+  async update(
+    @Query('id') id: string,
+    @Body() collection: NftInformationDto,
+  ): Promise<CollectionDocument> {
+    return await this.collectionService.updateOne(id, collection);
+  }
+
+  @ApiOperation({ summary: 'Delete a collection by id' })
+  @Delete('/:id')
+  async deleteOne(@Param('id') id: string): Promise<CollectionDocument> {
+    return this.collectionService.deleteOne(id);
   }
 }
