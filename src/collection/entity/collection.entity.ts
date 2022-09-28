@@ -25,6 +25,9 @@ export class Collection {
 
   @Prop({ required: false, default: 'This is the description of collection 1' })
   description: string;
+
+  @Prop({ required: false, default: 'This is the slug of collection 1' })
+  slug: string;
 }
 
 export const CollectionSchema = SchemaFactory.createForClass(Collection);

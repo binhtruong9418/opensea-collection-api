@@ -51,4 +51,12 @@ export class NftInformationDto {
   })
   @IsString()
   description: string;
+
+  @ApiProperty({
+    description: 'this is the slug of collection',
+    format: 'string',
+    default: 'This is the slug of collection 1',
+  })
+  @IsString()
+  slug: string;
 }
