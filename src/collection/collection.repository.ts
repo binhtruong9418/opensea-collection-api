@@ -40,6 +40,6 @@ export class CollectionRepository {
 
   async findBySlug(slug: string) {
     const allCollections = await this.findAll();
-    return allCollections.map((collection) => collection.slug === slug ? collection : null);
+    return allCollections.filter((collection) => collection.slug === slug);
   }
 }
