@@ -53,4 +53,10 @@ export class CollectionController {
   async deleteOne(@Param('id') id: string): Promise<CollectionDocument> {
     return this.collectionService.deleteOne(id);
   }
+
+  @ApiOperation({ summary: 'Get collections by slug' })
+  @Get('/slug/:slug')
+  async getAllBySlug(@Param('slug') slug: string) {
+    return this.collectionService.getBySlug(slug);
+  }
 }

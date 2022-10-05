@@ -46,5 +46,14 @@ export class CollectionService {
     }
     return await this.collectionRepository.remove(item);
   }
+
+  async getBySlug(slug: string) {
+    const item = await this.collectionRepository.findBySlug(slug);
+    if (!item) {
+      throw new NotFoundException('Item does not exists');
+    }
+
+    return item;
+  }
   
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Collection, CollectionDocument } from './entity/collection.entity';
+import { Collection, CollectionDocument, CollectionSchema } from './entity/collection.entity';
 import { NftInformationDto } from './dto/nft-information.dto';
 
 Injectable();
@@ -36,5 +36,10 @@ export class CollectionRepository {
 
   async findOneByName(name: string): Promise<CollectionDocument> {
     return this.userAppModal.findOne({ name });
+  }
+
+  async findBySlug(slug: string) {
+    const allCollections = await this.findAll();
+    return allCollections.map((collection) => collection.slug === slug ? collection : null);
   }
 }
